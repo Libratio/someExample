@@ -1,0 +1,33 @@
+{{include "./shared/header.html"}}
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" href="/note_folder" data-transition='slide-out'>
+        <span class="icon icon-left"></span>
+        返回
+    </a>
+    <h1 class="title">{{name}}</h1>
+</header>
+<nav class="bar bar-tab">
+    <a class="tab-item active" href="/note/detail/{{folder}}">
+        <span class="icon icon-edit"></span>
+        <span class="tab-label">创建备忘录</span>
+    </a>
+</nav>
+<div class="content">
+    <div class="list-block">
+        <ul>
+            {{each notes note index}}
+            <li>
+                <a href="/note/detail/{{folder}}/{{note.id}}" class="item-content item-link">
+                    <div class="item-media">
+                        <i class="icon icon-app"></i>
+                    </div>
+                    <div class="item-inner">
+                        <div class="item-title">{{note.content}}</div>
+                    </div>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+{{include "./shared/footer.html"}}

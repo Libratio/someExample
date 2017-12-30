@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{blog.title}}</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            margin: 0;
+            background-color: #eee;
+        }
+        article{
+            width: 70%;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100%;
+            padding-top: 10px;
+        }
+        h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+        p{
+            text-indent: 2em;
+        }
+        article>p{
+            font-size: 0.9rem;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>{{blog.title}}</h2>
+        <p>{{blog.description}}</p>
+        <main>
+            {{#blog.content}}
+        </main>
+    </article>
+</body>
+
+</html>

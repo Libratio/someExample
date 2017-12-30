@@ -1,0 +1,42 @@
+{{include "./shared/header.html"}}
+<header class="bar bar-nav">
+    <h1 class="title">备忘录</h1>
+</header>
+<nav class="bar bar-tab">
+    <a class="tab-item active" id="createFolder" href="#">
+        <span class="icon icon-edit"></span>
+        <span class="tab-label">创建文件夹</span>
+    </a>
+</nav>
+<div class="content">
+    <div class="list-block">
+        <ul>
+            {{each folders folder index}}
+            <li>
+                <a href="/note/{{folder.id}}" class="item-content item-link">
+                    <div class="item-media">
+                        <i class="icon icon-app"></i>
+                    </div>
+                    <div class="item-inner">
+                        <div class="item-title">{{folder.name}}</div>
+                        <div class="item-after">{{folder.count}}</div>
+                    </div>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+<form id="createForm" action="/note_folder" method="post">
+    <input type="hidden" name="name" value="" id="name">
+</form>
+<script>
+    $('#createFolder').click(function () {
+        $.prompt('请输入文件夹名字!', function (value) {
+            if (value.length > 0) {
+                $('#name').val(value);
+                $('#createForm').submit();
+            }
+        })
+    })
+</script> {{include "./shared/footer.html"}}

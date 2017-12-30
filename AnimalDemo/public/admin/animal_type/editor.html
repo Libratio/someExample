@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改动物类型</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/jquery.validate.min.js"></script>
+    <script src="/lib/messages_zh.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <h3 class="panel-title">修改动物类型</h3>
+            </div>
+            <div class="panel-body">
+                <form id="myForm" action="/api/v1/animal_types/editor" method="post">
+                    <div class="form-group">
+                        <input type="text" name="name" id="name" class="form-control" placeholder="请输入动物类型名称">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" id="description" rows="3" class="form-control" placeholder="请输入类型描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info form-control">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var searchStr = window.location.search;
+            var id = searchStr.split("=")[1];
+            var action = $('#myForm').attr('action');
+            action = action + '/' + id;
+            $('#myForm').attr("action", action);
+            $.getJSON('/api/v1/animal_types/editor/' + id, function (data) {
+                if (data.code == "success") {
+                    $('#name').val(data.result.name);
+                    $('#description').val(data.result.description);
+                }
+            })
+
+            $("form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    description: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                submitHandler: function (form) {
+                    $.post(form.action, $(form).serialize(), function (data) {
+                        alert(data.msg);
+                        if (data.code == "success") {
+                            window.location.href = '/admin/animal_type/index.html';
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

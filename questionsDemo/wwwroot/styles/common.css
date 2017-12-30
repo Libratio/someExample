@@ -1,0 +1,13 @@
+body{
+    padding-top: 70px;
+}
+.navbar-title{
+    text-align: center;
+    font-size: 18px;
+    line-height: 20px;
+    margin-top: 15px;
+    color: white;
+}
+#drop{
+    margin-right: 0;
+}

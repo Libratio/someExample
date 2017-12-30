@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动物数据展示</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/template-web.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div style="margin:20px 0 20px 0;overflow:hidden;">
+            <a href="/admin/animal/add.html" class="btn btn-primary pull-right">添加动物</a>
+            <a href="/admin/animal_type/add.html" class="btn btn-info pull-right">添加类型</a>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <h3 class="panel-title">动物数据展示</h3>
+            </div>
+            <div class="panel-body">
+                <!-- Table -->
+                <table class="table table-bordered">
+                    <tr>
+                        <th>序号</th>
+                        <th>名字</th>
+                        <th>类型</th>
+                        <th>描述</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script id="result" type="text/html">
+        {{each animals animal index}}
+        <tr>
+            <td>{{index + 1}}</td>
+            <td>{{animal.name}}</td>
+            <td>{{animal.title}}</td>
+            <td>{{animal.description}}</td>
+            <td>{{animal.remark}}</td>
+            <td>
+                <a href="/api/v1/animals/editor/{{animal._id.toString()}}">修改</a>
+                <a href="javascript:void(0);" onclick="deleteAnimalById('{{animal._id.toString()}}')">删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <script>
+        $.getJSON('/api/v1/animals/get_data', function (data) {
+            if (data.code == "success") {
+                var str = template("result", { animals: data.result });
+                $("#tbody").html(str);
+            }
+        })
+
+        function deleteAnimalById(id) {
+            $.post('/api/v1/animals/delete/' + id, function (data) {
+                if (data.code == "success") {
+                    location.reload();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

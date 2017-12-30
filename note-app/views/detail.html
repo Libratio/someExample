@@ -1,0 +1,54 @@
+{{include "./shared/header.html"}}
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" href="/note/{{folder}}" data-transition='slide-out'>
+        <span class="icon icon-left"></span>
+        返回
+    </a>
+    <h1 class="title">编辑</h1>
+</header>
+<div class="content">
+    {{if note}}
+    <form action="/note/{{folder}}/{{note.id}}" method="post">
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-input">
+                        <div class="content-block">
+                            <div class="row">
+                                <textarea class="col-100" rows="8" name="content" style="resize:none;">{{note.content}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-100">
+                        <button type="submit" style="width:100%" class="button button-big button-fill button-danger">确认修改</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {{else}}
+    <form action="/note/{{folder}}" method="post">
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-input">
+                        <div class="content-block">
+                            <div class="row">
+                                <textarea class="col-100" rows="8" name="content" style="resize:none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-100">
+                        <button type="submit" style="width:100%" class="button button-big button-fill button-danger">确认添加</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {{/if}}
+</div>
+{{include "./shared/footer.html"}}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加动物</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/jquery.validate.min.js"></script>
+    <script src="/lib/messages_zh.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <h3 class="panel-title">添加动物</h3>
+            </div>
+            <div class="panel-body">
+                <form action="/api/v1/animals/add" method="post">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="请输入动物名称">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="type" id="selType">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" rows="3" class="form-control" placeholder="请描述该动物"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="remark" rows="3" class="form-control" placeholder="备注信息"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info form-control">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $.getJSON('/api/v1/animal_types/get_data',function(data){
+          
+            if (data.code == "success") {
+                var str = '<option value="">请选择</option>';
+                data.result.forEach(function(item) {
+                    str += `
+                    <option value=${item._id.toString()}>${item.name}</option>
+                    `
+                });
+                $('#selType').html(str);
+            }
+        })
+        $(function () {
+            // 验证表单
+            $("form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    description: {
+                        required: true,
+                        minlength: 5
+                    },
+                    // 验证selete
+                    type:{
+                        required:true
+                    }
+                },
+                submitHandler: function (form) {
+                    $.post(form.action, $(form).serialize(), function (data) {
+                        alert(data.msg);
+                        if (data.code == "success") {
+                            window.location.href = '/admin/animal/index.html';
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+</html>
